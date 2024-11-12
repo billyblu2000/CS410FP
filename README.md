@@ -6,6 +6,17 @@ conda activate cs410fp
 pip install -r requirements.txt
 ```
 
+Copy the following code to `~/.metagpt/config2.yaml`. Create this file if it does not exist.
+```yaml
+llm:
+  api_type: "openai"  # or azure / ollama / open_llm etc. Check LLMType for more options
+  model: "gpt-3.5-turbo-1106"  # or gpt-3.5-turbo-1106 / gpt-4-1106-preview
+  base_url: "https://api.openai.com/v1"  # or forward url / other llm url
+  api_key: ""
+```
+
+Replace `api_key` with the OpenAI API key.
+
 ## Run
 
 ```bash
