@@ -2,8 +2,7 @@ from metagpt.roles import Role
 from metagpt.logs import logger
 from metagpt.team import Message
 
-from agents.main_control_agent import BuildPlan
-from agents.actions import BuildCode
+from agents.actions import BuildPlan, BuildCode
 
 class BuildAgent(Role):
     name: str = "Build Agent"
