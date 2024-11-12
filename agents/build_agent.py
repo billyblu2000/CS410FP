@@ -1,19 +1,9 @@
 from metagpt.roles import Role
-from metagpt.actions import Action
 from metagpt.logs import logger
 from metagpt.team import Message
-import subprocess
 
 from agents.main_control_agent import BuildPlan
-
-class BuildCode(Action):
-    name: str = "BuildCode"
-
-    async def run(self):
-        result = subprocess.run(["python", "-c", "print('Build code command placeholder')"], capture_output=True, text=True).stdout
-        logger.info(f"{result=}")
-        return result
-    
+from agents.actions import BuildCode
 
 class BuildAgent(Role):
     name: str = "Build Agent"

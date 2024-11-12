@@ -5,19 +5,7 @@ from metagpt.team import Message
 import subprocess
 from CS410FP.agents.build_agent import BuildCode, RunTests
     
-class AnalyzeBuildTestResults(Action):
-    name: str = "AnalyzeBuildTestResults"
 
-    PROMPT_TEMPLATE: str = """
-    Analyzing build and test results: {output}
-    """
-
-    async def run(self, build_test_output: str):
-        prompt = self.PROMPT_TEMPLATE.format(output=build_test_output)
-
-        rsp = await self._aask(prompt)
-
-        return rsp
 
 
 class TestResultAnalysisAgent(Role):
