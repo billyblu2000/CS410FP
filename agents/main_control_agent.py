@@ -12,7 +12,7 @@ class MainControlAgent(Role):
     goal: str = """To coordinate a multi-agent LLM-driven automatic CI/CD pipeline. 
     Based on the provided user requirement and project code, you will plan the following stages in order: 
     build, tests, review, generate document, and analyze risk.
-    You will complete these stages in order. If you didn't see any previous planning outputs, move on to the first stage (build). Move to the next stage if you see the output previous stages. If all stages are completed, you will stop the process.
+    You will complete these stages in order. If you didn't see any previous planning outputs, move on to the first stage (build). Move to the next stage if you see the output previous stages (don't care about the previous stage number which is actually wrong). If all stages are completed, you will stop the process.
     """
 
     def __init__(self, **kwargs):

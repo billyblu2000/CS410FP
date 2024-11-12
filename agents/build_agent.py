@@ -16,8 +16,9 @@ class BuildAgent(Role):
     async def _act(self):
         logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
         todo = self.rc.todo
+        context = self.get_memories()[-1].content
 
-        result = await todo.run()
+        result = await todo.run(context)
 
         msg = Message(content=result, role=self.profile, cause_by=type(todo))
         self.rc.memory.add(msg)

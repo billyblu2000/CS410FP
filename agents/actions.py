@@ -1,21 +1,33 @@
 import subprocess
+import re
 
 from metagpt.actions import Action
 from metagpt.logs import logger
+
+
+def parse_code(rsp, lang="python"):
+    pattern = r"```" + lang + r"(.*)```"
+    match = re.search(pattern, rsp, re.DOTALL)
+    code_text = match.group(1) if match else rsp
+    return code_text
 
 
 class BuildPlan(Action):
     name: str = "BuildPlan"
 
     PROMPT_TEMPLATE: str = """
-    Based on the product requirement, come up with how we can build the code. If no need, just output No Need to Build.
-    The code is: {context}
+    Based on the product requirement, come up with the command to build the provided code proect.
+    Return ```bash your_command_here``` with NO other texts
+    If you believe no building command is needed, your command should be 'pass'
+    The provided code project is: {context}
     """
 
     async def run(self, context: str):
         prompt = self.PROMPT_TEMPLATE.format(context=context)
 
         rsp = await self._aask(prompt)
+
+        rsp = parse_code(rsp, lang="bash")
 
         return rsp
     
@@ -82,9 +94,15 @@ class RiskAnalysisPlan(Action):
 
 class BuildCode(Action):
     name: str = "BuildCode"
+    
+    async def run(self, context, hard_coded_build_command = ""):
 
-    async def run(self):
-        result = subprocess.run(["python", "-c", "print('Build code command placeholder')"], capture_output=True, text=True).stdout
+        if 'pass' in context:
+            result = "According to the coordinater, no building command is needed."
+        else:
+            if hard_coded_build_command:
+                context = hard_coded_build_command
+            result = subprocess.run([context], capture_output=True, text=True).stdout
         logger.info(f"{result=}")
         return result
 
